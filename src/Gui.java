@@ -92,11 +92,11 @@ class Gui extends JFrame
         //-----------------------------
 
         barraComandos.add(jbPonto);
-        barraComandos.add(jbRetaEq);
+        //barraComandos.add(jbRetaEq);
         barraComandos.add(jbRetaMp);
-        barraComandos.add(jbCirculoEq);
+        //barraComandos.add(jbCirculoEq);
         barraComandos.add(jbCirculoMp);
-        barraComandos.add(jbCirculosHv);
+        //barraComandos.add(jbCirculosHv);
 
         //-----------------------------
         barraComandos.add(jbTriangulo);
@@ -110,7 +110,7 @@ class Gui extends JFrame
         barraComandos.add(jbRetangulo);
         //-----------------------------
 
-        barraComandos.add(jbFigura);
+        //barraComandos.add(jbFigura);
         barraComandos.add(jbLimpar); // Botao de Limpar
 
         barraComandos.add(jbCor); // Botao de Cores
@@ -121,9 +121,9 @@ class Gui extends JFrame
         areaDesenho.setEsp(espAtual); // define a espessura inicial
 
         //Slider para divisoes
-        barraComandos.add(jlN); // Label para espessura
-        barraComandos.add(jsN);    // Slider para espacamento
-        areaDesenho.setN(nAtual); // define a espessura inicial
+        //barraComandos.add(jlN); // Label para espessura
+        //barraComandos.add(jsN);    // Slider para espacamento
+        //areaDesenho.setN(nAtual); // define a espessura inicial
 
         //Slider para vertices
         barraComandos.add(jlV);
@@ -148,26 +148,27 @@ class Gui extends JFrame
             tipoAtual = TipoPrimitivo.PONTO;
             areaDesenho.setTipo(tipoAtual);
         });
-        jbRetaEq.addActionListener(e -> {
+        /*jbRetaEq.addActionListener(e -> {
             tipoAtual = TipoPrimitivo.RETA_EQ;
             areaDesenho.setTipo(tipoAtual);
-        });
+        });*/
         jbRetaMp.addActionListener(e -> {
             tipoAtual = TipoPrimitivo.RETA_MP;
             areaDesenho.setTipo(tipoAtual);
         });
+        /*
         jbCirculoEq.addActionListener(e -> {
             tipoAtual = TipoPrimitivo.CIRCULO_EQ;
             areaDesenho.setTipo(tipoAtual);
-        });
+        });*/
         jbCirculoMp.addActionListener(e -> {
             tipoAtual = TipoPrimitivo.CIRCULO_MP;
             areaDesenho.setTipo(tipoAtual);
-        });
+        });/*
         jbCirculosHv.addActionListener(e -> {
             tipoAtual = TipoPrimitivo.CIRCULOS_HV;
             areaDesenho.setTipo(tipoAtual);
-        });
+        });*/
 
         jbTriangulo.addActionListener(e -> {
             tipoAtual = TipoPrimitivo.TRIANGULO;
@@ -183,11 +184,11 @@ class Gui extends JFrame
             tipoAtual = TipoPrimitivo.RETANGULO;
             areaDesenho.setTipo(tipoAtual);
         });
-
+        /*
         jbFigura.addActionListener(e -> {
             tipoAtual = TipoPrimitivo.FIGURA;
             areaDesenho.setTipo(tipoAtual);
-        });
+        });*/
 
         jbLimpar.addActionListener(e -> {
             PainelDesenho painel = new PainelDesenho();

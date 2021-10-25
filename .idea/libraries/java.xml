@@ -1,6 +1,9 @@
 <component name="libraryTable">
   <library name="java">
-    <CLASSES />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../../../../../../Program Files/Java/jdk-16.0.1/gson-2.8.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../../../../../Program Files/Java/jdk-16.0.1/json-simple-1.1.1.jar!/" />
+    </CLASSES>
     <JAVADOC />
     <SOURCES />
   </library>

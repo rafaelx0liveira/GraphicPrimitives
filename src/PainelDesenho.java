@@ -6,6 +6,7 @@ import java.awt.event.MouseMotionListener;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Locale;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,6 +18,7 @@ import poligono.FigurasPoligono;
 import ponto.FiguraPontos;
 import reta.FiguraRetas;
 import circulo.FiguraCirculos;
+
 
 import retangulo.FiguraRetangulo;
 import triangulo.FiguraTriangulos;
@@ -35,6 +37,8 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     Color corAtual;       // Cor atual do primitivo
     int esp;              // Diametro do ponto
     int n;
+
+
 
     //Vertices
     int v;
@@ -98,18 +102,20 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     //****************************************
     //**************** JSON ******************
     //****************************************
-    JSONObject json = new JSONObject();
     JSONObject json2 = new JSONObject();
-    JSONArray jsonArray = new JSONArray();
-    JSONArray jsonArray2 = new JSONArray();
 
-    public JSONObject getJson() {
-        return json;
-    }
+    JSONArray jsonArrayPonto = new JSONArray();
 
-    public void setJson(JSONObject json) {
-        this.json = json;
-    }
+    JSONArray arrayReta = new JSONArray();
+    JSONArray arrayMp = new JSONArray();
+
+    JSONArray arrayCirculo = new JSONArray();
+
+    JSONArray arrayTriangulo = new JSONArray();
+
+    JSONArray arrayRetangulo = new JSONArray();
+
+    JSONArray arrayPoligono = new JSONArray();
 
     public JSONObject getJson2() {
         return json2;
@@ -119,22 +125,13 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
         this.json2 = json2;
     }
 
-    public JSONArray getJsonArray() {
-        return jsonArray;
+    public JSONArray getArrayPoligono() {
+        return arrayPoligono;
     }
 
-    public void setJsonArray(JSONArray jsonArray) {
-        this.jsonArray = jsonArray;
+    public void setArrayPoligono(JSONArray arrayPoligono) {
+        this.arrayPoligono = arrayPoligono;
     }
-
-    public JSONArray getJsonArray2() {
-        return jsonArray2;
-    }
-
-    public void setJsonArray2(JSONArray jsonArray2) {
-        this.jsonArray2 = jsonArray2;
-    }
-
     //****************************************
 
 
@@ -434,33 +431,127 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     {
         if (tipo == TipoPrimitivo.PONTO)
         {
-            FiguraPontos.desenharPonto(g, x, y, "", getEsp(), getCorAtual(), getLista(), getJson(), getJson2(),getJsonArray(), getJsonArray2());
+            FiguraPontos.desenharPonto(g, x, y, "", getEsp(), getCorAtual(), getLista());
+
+            JSONObject json1 = new JSONObject();
+            JSONArray arrayCor = new JSONArray();
+            JSONArray arrayCoordenada = new JSONArray();
+
+            double cX = (float) x/1000;
+            double cY = (float) y/800;
+
+            json1.put("esp: ",  + getEsp());
+            arrayCor.add(getCorAtual().getRed());
+            arrayCor.add(getCorAtual().getGreen());
+            arrayCor.add(getCorAtual().getBlue());
+            json1.put("cor:", arrayCor);
+            arrayCoordenada.add(String.format("%.2f", cX));
+            arrayCoordenada.add(String.format("%.2f", cY));
+            json1.put("coord", arrayCoordenada);
+            json1.put("nome", "ponto");
+            jsonArrayPonto.add(json1);
+            json2.put("pontos", jsonArrayPonto);
+
         }
         else if (tipo == TipoPrimitivo.RETA_EQ)
         {
             tipo =  TipoPrimitivo.RETA_EQ;
             FiguraRetas.desenharRetaEq(g, x1, y1, x2, y2, "", getEsp(), getCorAtual(), getLista());
 
-            /*
-            obj3.put("esp:",  + getEsp());
-            obj3.put("cor:", getCorAtual().getRed() + ", " + getCorAtual().getGreen() + ", " + getCorAtual().getBlue());
-            obj3.put("nome", "ponto1");
-            obj3.put("coord", "["+ x + ", " + y + "]");
-            array.add(obj3);
-            obj3.put(", ", obj2);
-            obj4.put("reta", array);
-             */
+            JSONObject json1 = new JSONObject();
+            JSONArray arrayCor = new JSONArray();
+            JSONArray arrayCoordenada = new JSONArray();
+            JSONArray arrayCoordenada2 = new JSONArray();
+            JSONArray arrayFinal = new JSONArray();
+            JSONArray jsonArray = new JSONArray();
 
+            double cX1 = (float) x1/1000;
+            double cY1 = (float) y1/800;
+            double cX2 = (float) x2/1000;
+            double cY2 = (float) y2/800;
 
-        } else if (tipo == TipoPrimitivo.RETA_MP){
+            json1.put("esp: ",  + getEsp());
+            arrayCor.add(getCorAtual().getRed());
+            arrayCor.add(getCorAtual().getGreen());
+            arrayCor.add(getCorAtual().getBlue());
+            json1.put("cor:", arrayCor);
+
+            arrayCoordenada.add(String.format("%.2f", cX1));
+            arrayCoordenada.add(String.format("%.2f", cY1));
+
+            arrayCoordenada2.add(String.format("%.2f", cX2));
+            arrayCoordenada2.add(String.format("%.2f", cY2));
+
+            arrayFinal.add(arrayCoordenada);
+            arrayFinal.add(arrayCoordenada2);
+
+            json1.put("coord", arrayFinal);
+            json1.put("nome", "reta_eq");
+            arrayReta.add(json1);
+            json2.put("reta_e'", arrayReta);
+
+        } else if (tipo == TipoPrimitivo.RETA_MP)
+        {
             FiguraRetas.desenharRetaMp(g, x1, y1, x2, y2, "", getEsp(), getCorAtual(), getLista(), true);
-            //FiguraRetas.desenharRetas(g, 10, 3);
+
+            JSONObject json1 = new JSONObject();
+            JSONArray arrayCor = new JSONArray();
+            JSONArray arrayCoordenada = new JSONArray();
+            JSONArray arrayCoordenada2 = new JSONArray();
+            JSONArray arrayFinal = new JSONArray();
+
+            double cX1 = (float) x1/1000;
+            double cY1 = (float) y1/800;
+            double cX2 = (float) x2/1000;
+            double cY2 = (float) y2/800;
+
+            json1.put("esp: ",  + getEsp());
+            arrayCor.add(getCorAtual().getRed());
+            arrayCor.add(getCorAtual().getGreen());
+            arrayCor.add(getCorAtual().getBlue());
+            json1.put("cor:", arrayCor);
+
+            arrayCoordenada.add(String.format("%.2f", cX1));
+            arrayCoordenada.add(String.format("%.2f", cY1));
+
+            arrayCoordenada2.add(String.format("%.2f", cX2));
+            arrayCoordenada2.add(String.format("%.2f", cY2));
+
+            arrayFinal.add(arrayCoordenada);
+            arrayFinal.add(arrayCoordenada2);
+
+            json1.put("coord", arrayFinal);
+            json1.put("nome", "reta");
+            arrayMp.add(json1);
+            json2.put("retas", arrayMp);
+
         } else if (tipo==TipoPrimitivo.CIRCULO_EQ){
             FiguraCirculos.desenharCirculoEq(g, x1, y1, getRaio(), "", getEsp(), getCorAtual(), getLista());
-            //FiguraCirculos.desenharCirculos(g, 50, 2);
+
         } else if (tipo==TipoPrimitivo.CIRCULO_MP){
             FiguraCirculos.desenharCirculoMp(g, x1, y1, getRaio(), "", getEsp(), getCorAtual(), getLista());
-            //FiguraCirculos.desenharCirculos(g, 50, 2);
+
+            JSONObject json1 = new JSONObject();
+            JSONArray arrayCor = new JSONArray();
+            JSONArray arrayCoordenada = new JSONArray();
+            //JSONArray jsonArray = new JSONArray();
+
+            double cX = (float) x1/1000;
+            double cY = (float) y1/800;
+            double cRaio = (float) raio/1000;
+
+            json1.put("esp: ",  + getEsp());
+            arrayCor.add(getCorAtual().getRed());
+            arrayCor.add(getCorAtual().getGreen());
+            arrayCor.add(getCorAtual().getBlue());
+            json1.put("cor:", arrayCor);
+            json1.put("raio", String.format("%.2f", cRaio));
+            arrayCoordenada.add(String.format("%.2f", cX));
+            arrayCoordenada.add(String.format("%.2f", cY));
+            json1.put("centro", arrayCoordenada);
+            json1.put("nome", "circulo");
+            arrayCirculo.add(json1);
+            json2.put("circulos", arrayCirculo);
 
         } else if (tipo==TipoPrimitivo.CIRCULOS_HV){
             FiguraCirculos.desenharCirculosHv(g, x1, y1, getRaio(), "", getEsp(), getCorAtual(), getN(), getLista());
@@ -474,15 +565,86 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
         } else if (tipo==TipoPrimitivo.TRIANGULO)
         {
             FiguraTriangulos.desenharTriangulo(g, x1, y1, x2, y2, x3, y3,  "", getEsp(), getCorAtual(), getLista());
+
+            JSONObject json1 = new JSONObject();
+            JSONArray arrayCor = new JSONArray();
+            JSONArray arrayCoordenada = new JSONArray();
+            JSONArray arrayCoordenada2 = new JSONArray();
+            JSONArray arrayCoordenada3 = new JSONArray();
+            JSONArray arrayFinal = new JSONArray();
+
+            double cX1 = (float) x1/1000;
+            double cY1 = (float) y1/800;
+            double cX2 = (float) x2/1000;
+            double cY2 = (float) y2/800;
+            double cX3 = (float) x3/1000;
+            double cY3 = (float) y3/800;
+
+            json1.put("esp: ",  + getEsp());
+            arrayCor.add(getCorAtual().getRed());
+            arrayCor.add(getCorAtual().getGreen());
+            arrayCor.add(getCorAtual().getBlue());
+            json1.put("cor:", arrayCor);
+
+            arrayCoordenada.add(String.format("%.2f", cX1));
+            arrayCoordenada.add(String.format("%.2f", cY1));
+
+            arrayCoordenada2.add(String.format("%.2f", cX2));
+            arrayCoordenada2.add(String.format("%.2f", cY2));
+
+            arrayCoordenada3.add(String.format("%.2f", cX3));
+            arrayCoordenada3.add(String.format("%.2f", cY3));
+
+            arrayFinal.add(arrayCoordenada);
+            arrayFinal.add(arrayCoordenada2);
+            arrayFinal.add(arrayCoordenada3);
+
+            json1.put("coord", arrayFinal);
+            json1.put("nome", "triangulo");
+            arrayTriangulo.add(json1);
+            json2.put("triangulos", arrayTriangulo);
         }
         else if (tipo==TipoPrimitivo.POLIGONO)
         {
-            FigurasPoligono.desenharPoligono(g, x1, y1, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6, x7, y7, x8, y8, x9, y9, x10, y10, "", getEsp(), getCorAtual(), getV(), getLista());
+            FigurasPoligono.desenharPoligono(g, x1, y1, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6, x7, y7, x8, y8, x9, y9, x10, y10, "", getEsp(), getCorAtual(), getV(), getLista(), getJson2(), getArrayPoligono());
+
         }
 
         else if (tipo==TipoPrimitivo.RETANGULO)
         {
             FiguraRetangulo.desenharRetangulo(g, x1, x2, y1, y2, "", getEsp(), getCorAtual(), getLista());
+
+            JSONObject json1 = new JSONObject();
+            JSONArray arrayCor = new JSONArray();
+            JSONArray arrayCoordenada = new JSONArray();
+            JSONArray arrayCoordenada2 = new JSONArray();
+            JSONArray arrayFinal = new JSONArray();
+
+            double cX1 = (float) x1/1000;
+            double cY1 = (float) y1/800;
+            double cX2 = (float) x2/1000;
+            double cY2 = (float) y2/800;
+
+            json1.put("esp: ",  + getEsp());
+            arrayCor.add(getCorAtual().getRed());
+            arrayCor.add(getCorAtual().getGreen());
+            arrayCor.add(getCorAtual().getBlue());
+            json1.put("cor:", arrayCor);
+
+            arrayCoordenada.add(String.format("%.2f", cX1));
+            arrayCoordenada.add(String.format("%.2f", cY1));
+
+            arrayCoordenada2.add(String.format("%.2f", cX2));
+            arrayCoordenada2.add(String.format("%.2f", cY2));
+
+            arrayFinal.add(arrayCoordenada);
+            arrayFinal.add(arrayCoordenada2);
+
+            json1.put("coord", arrayFinal);
+            json1.put("nome", "retangulo");
+            arrayRetangulo.add(json1);
+            json2.put("retangulos", arrayRetangulo);
+
         }
 
         if(limpou == true)
@@ -496,13 +658,11 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 
         try(FileWriter arquivoJson = new FileWriter("JSON.json"))
         {
-            arquivoJson.append(getJson2().toJSONString());
+            arquivoJson.append(getJson2().toString());
             arquivoJson.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
 
     }
 

@@ -18,44 +18,61 @@ import java.util.LinkedList;
 public class FiguraPontos
 {
 
-    public static void desenharPonto(Graphics g, int x, int y, String nome, int diametro, Color cor, LinkedList lista, JSONObject json, JSONObject json2 , JSONArray array1, JSONArray array2)
+    public static void desenharPonto(Graphics g, int x, int y, String nome, int diametro, Color cor, LinkedList lista)
     {
-
-        // Color cor = new Color((int) (Math.random() * 256),
-        // (int) (Math.random() * 256),
-        // (int) (Math.random() * 256));
         PontoGr p = new PontoGr(x, y, cor, nome, diametro);
 
-        json.put("esp:",  + diametro);
-        json.put("cor:", cor.getRed() + ", " + cor.getGreen() + ", " + cor.getBlue());
-
-        json.put("nome", "ponto");
-
-        array1.clear();
-
-        array1.add(x);
-        array1.add(y);
-
-        json.put("coord", array1);
+        //lista.add("Ponto");
 
 
-        array2.add(json);
-        json2.put("ponto", array2);
 
 
+        //array1.clear();
+
+
+
+
+        //json1.put("coord", array2);
+
+
+
+
+
+
+        lista.add(x);
+        //array1.add(lista.getLast());
+        //array1.add(x);
+
+        lista.add(y);
+        //array1.add(y);
+
+        //array1.add(lista.getLast());
+        //jsonArray.add(lista);
+
+        //json1.put("coord", array1);
+
+
+        //array2.add(json1);
+        //json2.put("ponto", array2);
+
+
+        /*
         lista.add("Ponto");
         lista.add(x);
         lista.add(y);
+         */
+
         lista.add(cor.getRed());
         lista.add(cor.getGreen());
         lista.add(cor.getBlue());
         lista.add(diametro);
 
+
+
         for(Object ponto : lista)
         {
             System.out.println(ponto);
         }
-
         p.desenharPonto(g);
     }
 

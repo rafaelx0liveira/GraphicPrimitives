@@ -39,6 +39,8 @@ public class ListaLigada
                 obj1.put("cor:", p1.getCorPto().getRed() + ", " + p1.getCorPto().getGreen() + ", " + p1.getCorPto().getBlue());
                 obj1.put("nome", "ponto1");
                 //obj1.put("coord", "["+ x + ", " + y + "]");
+
+
                 array2.add(p1.getX());
                 array2.add(p1.getY());
 
